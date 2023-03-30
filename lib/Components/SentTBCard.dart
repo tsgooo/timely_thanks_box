@@ -94,16 +94,16 @@ class _SentTBCardState extends State<SentTBCard> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
-                      height: 100,
-                      width: 100,
+                      height: MediaQuery.of(context).size.width / 4,
+                      width: MediaQuery.of(context).size.width / 4,
                       child: widget.image,
                     ),
                   ),
                   SizedBox(
                     // height: 100,
-                    width: 250,
+                    width: MediaQuery.of(context).size.width / 1.8,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(3.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -113,9 +113,11 @@ class _SentTBCardState extends State<SentTBCard> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: SizedBox(
-                                    width: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
                                     child: Text(
                                       widget.text,
+                                      textAlign: TextAlign.justify,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 25,
                                       style: TextStyle(

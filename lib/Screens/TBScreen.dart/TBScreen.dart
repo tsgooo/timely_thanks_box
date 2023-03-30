@@ -11,6 +11,13 @@ class TBScreen extends StatefulWidget {
 }
 
 class _TBScreenState extends State<TBScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // pragma
+  }
+
+  // final size = MediaQuery.of(context).size
   List<dynamic> images = [
     Image.asset('assets/best-wishes.png'),
     Image.asset('assets/good-luck.png'),
@@ -48,7 +55,7 @@ class _TBScreenState extends State<TBScreen> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -58,8 +65,8 @@ class _TBScreenState extends State<TBScreen> {
               Row(
                 children: [
                   SizedBox(
-                    height: 100,
-                    width: 100,
+                    height: MediaQuery.of(context).size.width / 3,
+                    width: MediaQuery.of(context).size.width / 3,
                     child: Image.asset('assets/letterbox.png'),
                   ),
                   Padding(
@@ -68,15 +75,16 @@ class _TBScreenState extends State<TBScreen> {
                       // right: 10,
                     ),
                     child: SizedBox(
-                      width: 250,
+                      width: MediaQuery.of(context).size.width / 2,
                       child: Column(
                         children: [
                           const Text('Сэтгэлийн бэлэг илгээгээрэй',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 13)),
                           Text(
                             'Та өөрийн хамтран ажиллагч багийн найздаа талархсан сэтгэгдлээ илэрхийлэх бол энэхүү хайрцагийг ашиглаад илгээгээрэй',
                             style: TextStyle(
-                                fontSize: 14, color: Colors.grey[600]),
+                                fontSize: 13, color: Colors.grey[600]),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.justify,
                             maxLines: 10,
@@ -150,7 +158,7 @@ class _TBScreenState extends State<TBScreen> {
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: SizedBox(
-                        width: 300,
+                        width: MediaQuery.of(context).size.width / 2,
                         child: TextField(
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -182,7 +190,7 @@ class _TBScreenState extends State<TBScreen> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      print('$index Lllllllllllllllll');
+                      // print('$index Lllllllllllllllll');
                       setState(() {
                         num = index;
                         tapped = true;
@@ -226,24 +234,29 @@ class _TBScreenState extends State<TBScreen> {
                 },
               ),
               const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple[900],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Илгээх',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+              InkWell(
+                onTap: () {
+                  print("${MediaQuery.of(context).size.width} lllll ");
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple[900],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Илгээх',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

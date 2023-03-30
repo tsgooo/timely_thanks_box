@@ -62,8 +62,8 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
                     ],
                   ),
                   SizedBox(
-                    height: 200,
-                    width: 200,
+                    height: MediaQuery.of(context).size.width / 3,
+                    width: MediaQuery.of(context).size.width / 3,
                     child: widget.image,
                   ),
                   const SizedBox(height: 30),
@@ -92,12 +92,12 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showCard();
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 30, left: 12.0, right: 12),
+    return Padding(
+      padding: const EdgeInsets.only(top: 30, left: 10.0, right: 10),
+      child: InkWell(
+        onTap: () {
+          showCard();
+        },
         child: Container(
           // height: 120,
           decoration: BoxDecoration(
@@ -110,7 +110,7 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(3.0),
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,8 +118,8 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height: 100,
-                    width: 100,
+                    height: MediaQuery.of(context).size.width / 3.2,
+                    width: MediaQuery.of(context).size.width / 3.2,
                     child: widget.image,
                   ),
                 ),
@@ -132,7 +132,7 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: 220,
+                        width: MediaQuery.of(context).size.width / 2,
                         child: Text(
                           '"${widget.text}"',
                           overflow: TextOverflow.ellipsis,
@@ -155,15 +155,19 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const SizedBox(width: 80),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 9),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.date.toString().substring(0, 19),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 13.2,
-                                fontWeight: FontWeight.w500,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: Text(
+                                widget.date.toString().substring(0, 16),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.2,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),

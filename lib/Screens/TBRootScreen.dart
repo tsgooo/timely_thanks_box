@@ -33,6 +33,14 @@ class _ThanksBoxScreenState extends State<ThanksBoxScreen>
       appBar: AppBar(
         elevation: 0,
         title: const Text('Талархалын хайрцаг'),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+            size: 28,
+          ),
+        ),
         bottom: TabBar(
           indicator: const ShapeDecoration(
             shape: UnderlineInputBorder(

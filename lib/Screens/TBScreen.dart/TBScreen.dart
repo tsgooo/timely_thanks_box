@@ -55,7 +55,7 @@ class _TBScreenState extends State<TBScreen> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -234,28 +234,34 @@ class _TBScreenState extends State<TBScreen> {
                 },
               ),
               const SizedBox(height: 20),
-              InkWell(
-                onTap: () {
-                  print("${MediaQuery.of(context).size.width} lllll ");
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple[900],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Илгээх',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50.0),
+                child: InkWell(
+                  onTap: () {
+                    print("${MediaQuery.of(context).size.width} lllll ");
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurple[900],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Илгээх',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

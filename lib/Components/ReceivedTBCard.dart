@@ -30,8 +30,8 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0)), //this right here
           child: Container(
-            width: MediaQuery.of(context).size.width - 50,
-            height: MediaQuery.of(context).size.height / 1.8,
+            width: MediaQuery.of(context).size.width - 10,
+            height: MediaQuery.of(context).size.height / 2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               gradient: LinearGradient(
@@ -67,11 +67,14 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
                     child: widget.image,
                   ),
                   const SizedBox(height: 30),
-                  Text(
-                    '"${widget.text}"',
-                    style: const TextStyle(fontSize: 14, color: Colors.white),
-                    maxLines: 10,
-                    overflow: TextOverflow.ellipsis,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 8,
+                    child: Text(
+                      '"${widget.text}"',
+                      style: const TextStyle(fontSize: 14, color: Colors.white),
+                      maxLines: 10,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   const SizedBox(height: 30),
                   Text(
@@ -93,7 +96,8 @@ class _ReceivedTBCardState extends State<ReceivedTBCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 30, left: 10.0, right: 10),
+      padding:
+          const EdgeInsets.only(top: 15, left: 10.0, right: 10, bottom: 15),
       child: InkWell(
         onTap: () {
           showCard();

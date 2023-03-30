@@ -46,17 +46,9 @@ class ReceivedTBScreenState extends State<ReceivedTBScreen> {
               },
             ),
           ),
+          // const SizedBox(height: 100),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Get.to(() => const TBScreen());
-      //   },
-      //   child: const Icon(
-      //     Icons.add,
-      //     color: Colors.deepPurple,
-      //   ),
-      // ),
     );
   }
 }

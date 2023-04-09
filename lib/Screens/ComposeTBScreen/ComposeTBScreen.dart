@@ -4,7 +4,7 @@ import 'package:irle_thanks_box/Components/ThankBoxComponents/TBColors.dart';
 import 'package:irle_thanks_box/Components/ThankBoxComponents/TBTemplates.dart';
 import 'package:irle_thanks_box/Controllers/ComposeTBController.dart';
 import 'package:irle_thanks_box/Controllers/ThanksBoxController.dart';
-import 'package:shimmer_effect/shimmer_effect.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WorkerData {
@@ -531,20 +531,19 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                       itemBuilder: (context, index1) {
                         return Obx(
                           () => thanksBoxController.isLoadingTemplate.value
-                              ? ShimmerEffect(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.white,
-                                  child: GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: 6,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3),
-                                    itemBuilder: (context, index2) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                              ? GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: 6,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3),
+                                  itemBuilder: (context, index2) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Shimmer.fromColors(
+                                        baseColor: Colors.grey,
+                                        highlightColor: Colors.white,
                                         child: Container(
                                           width: 75,
                                           height: 75,
@@ -554,9 +553,9 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                                             color: Colors.grey,
                                           ),
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 )
                               : GridView.builder(
                                   physics: const NeverScrollableScrollPhysics(),

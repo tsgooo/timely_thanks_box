@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ReceivedTBShimmer extends StatelessWidget {
-  const ReceivedTBShimmer({super.key});
+class SentTBShimmer extends StatelessWidget {
+  const SentTBShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,8 @@ class ReceivedTBShimmer extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
           child: Shimmer.fromColors(
-            baseColor: Colors.grey,
             highlightColor: Colors.white,
+            baseColor: Colors.grey,
             child: Container(
               height: 180,
               decoration: BoxDecoration(
@@ -25,6 +25,21 @@ class ReceivedTBShimmer extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                              height: 12, width: 150, color: Colors.grey[100]),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                              height: 15, width: 100, color: Colors.grey[100]),
+                        ),
+                      ],
+                    ),
                     Row(
                       children: [
                         Padding(
@@ -42,7 +57,7 @@ class ReceivedTBShimmer extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
                                   height: 15,
-                                  width: 180,
+                                  width: 100,
                                   color: Colors.grey[100]),
                             ),
                             const SizedBox(height: 20),
@@ -50,25 +65,13 @@ class ReceivedTBShimmer extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
                                   height: 15,
-                                  width: 150,
+                                  width: 180,
                                   color: Colors.grey[100]),
                             ),
                           ],
                         ),
                       ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                              height: 12, width: 150, color: Colors.grey[100]),
-                        ),
-                        const SizedBox(width: 10),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
+                    )
                   ],
                 ),
               ),

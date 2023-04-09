@@ -38,8 +38,7 @@ class ReceivedTBScreenState extends State<ReceivedTBScreen>
     super.build(context);
     return RefreshIndicator(
       onRefresh: () async {
-        thanksBoxController.getReceived(
-            2684, 'b4756d2719cc7f80c0b937c72563742d', 1);
+        thanksBoxController.getReceived(2684, '1', 1);
       },
       child: Scaffold(
         body: Column(

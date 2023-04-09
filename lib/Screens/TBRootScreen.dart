@@ -3,10 +3,14 @@ import 'package:get/get.dart';
 import 'package:irle_thanks_box/Screens/TabbarScreens/ReceivedTBScreen.dart';
 import 'package:irle_thanks_box/Screens/TabbarScreens/SentTBScreen.dart';
 
-import 'TBScreen.dart/TBScreen.dart';
+import 'ComposeTBScreen/ComposeTBScreen.dart';
 
 class ThanksBoxScreen extends StatefulWidget {
-  const ThanksBoxScreen({super.key});
+  final int initialIndex;
+  const ThanksBoxScreen({
+    super.key,
+    required this.initialIndex,
+  });
 
   @override
   State<ThanksBoxScreen> createState() => _ThanksBoxScreenState();
@@ -18,7 +22,8 @@ class _ThanksBoxScreenState extends State<ThanksBoxScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(
+        length: 2, vsync: this, initialIndex: widget.initialIndex);
   }
 
   @override
@@ -69,7 +74,7 @@ class _ThanksBoxScreenState extends State<ThanksBoxScreen>
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
         onPressed: () {
-          Get.to(() => const TBScreen());
+          Get.to(() => const ComposeTBScreen());
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),

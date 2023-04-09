@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shimmer_effect/shimmer_effect.dart';
 
 import '../../Components/SentTBCard.dart';
+import '../../Controllers/ThanksBoxController.dart';
 
 class SentTBScreen extends StatefulWidget {
   const SentTBScreen({super.key});
@@ -9,72 +12,165 @@ class SentTBScreen extends StatefulWidget {
   State<SentTBScreen> createState() => _SentTBScreenState();
 }
 
-class _SentTBScreenState extends State<SentTBScreen> {
+class _SentTBScreenState extends State<SentTBScreen>
+    with AutomaticKeepAliveClientMixin {
   late ScrollController _controller;
+  final _thankBoxController = Get.put(ThanksBoxController());
 
   @override
   void initState() {
+    super.initState();
+    _thankBoxController.getSentList(2684, '1', 2);
     _controller = ScrollController();
     _controller.addListener(_scrollListener); //the listener for up and down.
-    super.initState();
   }
 
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      setState(() {
-        //you can do anything here
-      });
+      setState(() {});
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {
-      setState(() {
-        //you can do anything here
-      });
+      setState(() {});
     }
   }
 
-  List<dynamic> images = [
-    Image.asset('assets/best-wishes.png'),
-    Image.asset('assets/good-luck.png'),
-    Image.asset('assets/great.png'),
-    Image.asset('assets/thank-you.png'),
-    Image.asset('assets/stay-strong.png'),
-    Image.asset('assets/well-done.png'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 500,
-                    child: ListView.builder(
-                      controller: _controller,
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return SentTBCard(
-                          image: images[index],
-                          date: DateTime.now(),
-                          name: 'Борхүү',
-                          text:
-                              "Life is a journey full of ups and downs, but it's important to remember that every experience is an opportunity to learn and grow. Whether you're facing challenges or enjoying successes, cherish each moment and embrace the lessons they bring. Keep pushing forward and never give up on your dreams.",
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
+    super.build(context);
+    return RefreshIndicator(
+      onRefresh: () async {
+        _thankBoxController.getSentList(2684, '1', 2);
+      },
+      child: Scaffold(
+        body: Column(
+          children: [
+            Expanded(
+              child: Obx(
+                () => _thankBoxController.isLoadingSentList.value == false
+                    ? _thankBoxController.mySentListModel.value.mySentList !=
+                            null
+                        ? ListView.builder(
+                            controller: _controller,
+                            shrinkWrap: true,
+                            itemCount: _thankBoxController
+                                        .mySentListModel.value.mySentList !=
+                                    null
+                                ? _thankBoxController
+                                    .mySentListModel.value.mySentList!.length
+                                : 0,
+                            itemBuilder: (context, index) {
+                              var item = _thankBoxController
+                                  .mySentListModel.value.mySentList![index];
+                              return SentTBCard(
+                                model: item,
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: Expanded(
+                              child: Text("hooson"),
+                            ),
+                          )
+                    : ShimmerEffect(
+                        baseColor: Colors.grey,
+                        highlightColor: Colors.white,
+                        child: ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 8),
+                              child: Container(
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.grey[300]!),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Container(
+                                                height: 12,
+                                                width: 150,
+                                                color: Colors.grey[100]),
+                                          ),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Container(
+                                                height: 15,
+                                                width: 100,
+                                                color: Colors.grey[100]),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(1000),
+                                              child: Container(
+                                                  height: 75,
+                                                  width: 75,
+                                                  color: Colors.grey[100]),
+                                            ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                    height: 15,
+                                                    width: 100,
+                                                    color: Colors.grey[100]),
+                                              ),
+                                              const SizedBox(height: 20),
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                    height: 15,
+                                                    width: 180,
+                                                    color: Colors.grey[100]),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

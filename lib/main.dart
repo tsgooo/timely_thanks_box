@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import 'Screens/TBRootScreen.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('box');
+
   runApp(const MyApp());
 }
 
@@ -35,7 +39,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: newTheme,
-      home: const ThanksBoxScreen(),
+      home: const ThanksBoxScreen(initialIndex: 0),
+      // home: const HomePage(),
     );
   }
 }

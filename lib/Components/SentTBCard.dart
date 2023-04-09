@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../Models/SentTBModel.dart';
+
 class SentTBCard extends StatefulWidget {
-  final DateTime date;
-  final String text;
-  final String name;
-  final dynamic image;
+  final SendingModel model;
   const SentTBCard({
     super.key,
-    required this.date,
-    required this.text,
-    required this.name,
-    this.image,
+    required this.model,
   });
 
   @override
   State<SentTBCard> createState() => _SentTBCardState();
 }
 
-class _SentTBCardState extends State<SentTBCard> {
+class _SentTBCardState extends State<SentTBCard>
+    with SingleTickerProviderStateMixin {
   String determineDay() {
-    String day = DateFormat('EEEE').format(widget.date);
+    String day = DateFormat('EEEE').format(widget.model.date!);
     switch (day) {
       case 'Monday':
         return 'Даваа';
@@ -75,13 +72,13 @@ class _SentTBCardState extends State<SentTBCard> {
                     Row(
                       children: [
                         Text(
-                          '${widget.date.toString().substring(0, 10)}, ',
+                          '${widget.model.date.toString().substring(0, 10)}, ',
                           style: const TextStyle(
                               color: Colors.deepPurple,
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          widget.date.toString().substring(11, 16),
+                          widget.model.date.toString().substring(11, 16),
                           style: const TextStyle(color: Colors.deepPurple),
                         ),
                       ],
@@ -96,7 +93,7 @@ class _SentTBCardState extends State<SentTBCard> {
                     child: SizedBox(
                       height: MediaQuery.of(context).size.width / 4,
                       width: MediaQuery.of(context).size.width / 4,
-                      child: widget.image,
+                      child: Image.network(widget.model.template!),
                     ),
                   ),
                   SizedBox(
@@ -116,7 +113,7 @@ class _SentTBCardState extends State<SentTBCard> {
                                     width:
                                         MediaQuery.of(context).size.width / 3,
                                     child: Text(
-                                      widget.text,
+                                      widget.model.description!,
                                       textAlign: TextAlign.justify,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 25,
@@ -133,7 +130,12 @@ class _SentTBCardState extends State<SentTBCard> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '${widget.name}-д',
+                              textAlign: TextAlign.justify,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              widget.model.to != null
+                                  ? '${widget.model.to}-д'
+                                  : "",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 15,

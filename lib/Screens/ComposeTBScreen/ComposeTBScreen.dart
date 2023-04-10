@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irle_thanks_box/Components/ThankBoxComponents/TBColors.dart';
@@ -222,92 +224,8 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                   InkWell(
                     onTap: () {
                       composeController.getDepartment(2684, '1');
-                      showModalBottomSheet(
-                        shape: const RoundedRectangleBorder(),
-                        context: context,
-                        builder: (context) {
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return Obx(
-                                () => composeController
-                                        .isLoadingForGetDepartment.value
-                                    ? const Center(
-                                        child: CircularProgressIndicator())
-                                    : Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const SizedBox.square(),
-                                              const Text('Алба хэлтэс сонгох'),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                icon: const Icon(Icons.close),
-                                              ),
-                                            ],
-                                          ),
-                                          const Divider(),
-                                          Expanded(
-                                            child: ListView.builder(
-                                              itemCount: composeController
-                                                  .departmentModel.length,
-                                              itemBuilder: (context, index) {
-                                                // nogoo
-                                                return ListTile(
-                                                  onTap: () {
-                                                    composeController
-                                                        .isDepSelected
-                                                        .value = true;
-
-                                                    departmentIndex = index;
-                                                    composeController
-                                                            .bottomSheetDepTitle
-                                                            .value =
-                                                        composeController
-                                                            .departmentModel[
-                                                                index]
-                                                            .title!;
-                                                    setState(() {});
-                                                    composeController.getWorker(
-                                                        int.parse(composeController
-                                                            .departmentModel[
-                                                                departmentIndex]
-                                                            .id!),
-                                                        1);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  leading: Text(
-                                                    composeController
-                                                        .departmentModel[index]
-                                                        .title!,
-                                                    style: TextStyle(
-                                                      color: index ==
-                                                              departmentIndex
-                                                          ? Colors.blue
-                                                          : Colors.grey[900],
-                                                    ),
-                                                  ),
-                                                  trailing: Icon(
-                                                    Icons.check,
-                                                    color:
-                                                        index == departmentIndex
-                                                            ? Colors.blue
-                                                            : Colors.grey[900],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              );
-                            },
-                          );
-                        },
-                      );
+                      departmentModalBottomSheet(context);
+                      // bottomSheet(context);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -363,109 +281,7 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                           int.parse(composeController
                               .departmentModel[departmentIndex].id!),
                           1);
-                      showModalBottomSheet(
-                        shape: const RoundedRectangleBorder(),
-                        context: context,
-                        builder: (context) {
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const SizedBox.square(),
-                                      const Text('Ажилтан сонгох'),
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: const Icon(Icons.close),
-                                      ),
-                                    ],
-                                  ),
-                                  const Divider(),
-                                  Obx(
-                                    () => composeController
-                                            .isLoadingForGetDepartment.value
-                                        ? const Center(
-                                            child: CircularProgressIndicator())
-                                        : composeController
-                                                .isLoadingForWorker.value
-                                            ? const Center(
-                                                child:
-                                                    CircularProgressIndicator())
-                                            : composeController
-                                                    .workerModel.isEmpty
-                                                ? const Center(
-                                                    child: Text('hooson baina'))
-                                                : Expanded(
-                                                    child: ListView.builder(
-                                                      itemCount:
-                                                          composeController
-                                                              .workerModel
-                                                              .length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        bool isSelected =
-                                                            composeController
-                                                                .selectedWorkers
-                                                                .map((items) =>
-                                                                    items.id)
-                                                                .toList()
-                                                                .contains(composeController
-                                                                    .workerModel[
-                                                                        index]
-                                                                    .id);
-                                                        // end baina oo
-                                                        return ListTile(
-                                                          selected: isSelected,
-                                                          onTap: () {
-                                                            setState(() {
-                                                              isSelected = composeController
-                                                                  .selectedWorkers
-                                                                  .map((items) =>
-                                                                      items.id)
-                                                                  .toList()
-                                                                  .contains(composeController
-                                                                      .workerModel[
-                                                                          index]
-                                                                      .id);
-                                                            });
-                                                            composeController
-                                                                .toggleSelection(
-                                                                    index);
-                                                          },
-                                                          leading: Text(
-                                                            composeController
-                                                                .workerModel[
-                                                                    index]
-                                                                .name!,
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                              color: isSelected
-                                                                  ? Colors.blue
-                                                                  : Colors.grey,
-                                                            ),
-                                                          ),
-                                                          trailing: Icon(
-                                                            Icons.check,
-                                                            color: isSelected
-                                                                ? Colors.blue
-                                                                : Colors.grey,
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                      );
+                      workerModalBottomSheet(context);
                     },
                     child: Container(
                       height: 35,
@@ -727,6 +543,209 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
           ),
         ),
       ),
+    );
+  }
+
+  void departmentModalBottomSheet(context) {
+    showModalBottomSheet(
+      // shape: Roun,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return FractionallySizedBox(
+              heightFactor: 1,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Obx(
+                    () => composeController.isLoadingForGetDepartment.value
+                        ? const Center(child: CircularProgressIndicator())
+                        : Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const SizedBox.square(),
+                                  const Text('Алба хэлтэс сонгох'),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(Icons.close),
+                                  ),
+                                ],
+                              ),
+                              const Divider(),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount:
+                                      composeController.departmentModel.length,
+                                  itemBuilder: (context, index) {
+                                    // nogoo
+                                    return ListTile(
+                                      onTap: () {
+                                        composeController.isDepSelected.value =
+                                            true;
+
+                                        departmentIndex = index;
+                                        composeController
+                                                .bottomSheetDepTitle.value =
+                                            composeController
+                                                .departmentModel[index].title!;
+                                        setState(() {});
+                                        composeController.getWorker(
+                                            int.parse(composeController
+                                                .departmentModel[
+                                                    departmentIndex]
+                                                .id!),
+                                            1);
+                                        Navigator.pop(context);
+                                      },
+                                      leading: Text(
+                                        composeController
+                                            .departmentModel[index].title!,
+                                        style: TextStyle(
+                                          color: index == departmentIndex
+                                              ? Colors.blue
+                                              : Colors.grey[900],
+                                        ),
+                                      ),
+                                      trailing: Icon(
+                                        Icons.check,
+                                        color: index == departmentIndex
+                                            ? Colors.blue
+                                            : Colors.grey[900],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void workerModalBottomSheet(context) {
+    showModalBottomSheet(
+      // shape: const RoundedRectangleBorder(),
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return FractionallySizedBox(
+              heightFactor: 1,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox.square(),
+                          const Text('Ажилтан сонгох'),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.close),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      Obx(
+                        () => composeController.isLoadingForGetDepartment.value
+                            ? const Center(child: CircularProgressIndicator())
+                            : composeController.isLoadingForWorker.value
+                                ? const Center(
+                                    child: CircularProgressIndicator())
+                                : composeController.workerModel.isEmpty
+                                    ? const Center(child: Text('hooson baina'))
+                                    : Expanded(
+                                        child: ListView.builder(
+                                          itemCount: composeController
+                                              .workerModel.length,
+                                          itemBuilder: (context, index) {
+                                            bool isSelected = composeController
+                                                .selectedWorkers
+                                                .map((items) => items.id)
+                                                .toList()
+                                                .contains(composeController
+                                                    .workerModel[index].id);
+                                            // end baina oo
+                                            return ListTile(
+                                              selected: isSelected,
+                                              onTap: () {
+                                                setState(() {
+                                                  isSelected = composeController
+                                                      .selectedWorkers
+                                                      .map((items) => items.id)
+                                                      .toList()
+                                                      .contains(
+                                                          composeController
+                                                              .workerModel[
+                                                                  index]
+                                                              .id);
+                                                });
+                                                composeController
+                                                    .toggleSelection(index);
+                                              },
+                                              leading: Text(
+                                                composeController
+                                                    .workerModel[index].name!,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: isSelected
+                                                      ? Colors.blue
+                                                      : Colors.grey,
+                                                ),
+                                              ),
+                                              trailing: Icon(
+                                                Icons.check,
+                                                color: isSelected
+                                                    ? Colors.blue
+                                                    : Colors.grey,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

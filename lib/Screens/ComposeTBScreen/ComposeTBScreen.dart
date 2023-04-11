@@ -46,21 +46,23 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
   double chipHeight = 0;
 
   Widget _buildSelectedWorkers() {
-    return Obx(
-      () => Wrap(
-        spacing: 8.0,
-        children: composeController.selectedWorkers
-            .map(
-              (items) => Chip(
-                label: Text(items.name),
-                onDeleted: () {
-                  setState(() {
-                    composeController.selectedWorkers.remove(items);
-                  });
-                },
-              ),
-            )
-            .toList(),
+    return IntrinsicHeight(
+      child: Obx(
+        () => Wrap(
+          spacing: 8.0,
+          children: composeController.selectedWorkers
+              .map(
+                (items) => Chip(
+                  label: Text(items.name),
+                  onDeleted: () {
+                    setState(() {
+                      composeController.selectedWorkers.remove(items);
+                    });
+                  },
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }
@@ -172,105 +174,102 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
         onRefresh: () {
           return thanksBoxController.getTemplate(2684, "1");
         },
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height * 1.1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: ListView(
+            // mainAxisSize: MainAxisSize.min,
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.width / 3,
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: Image.asset('assets/new-idea.png'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          // right: 10,
-                        ),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Column(
-                            children: [
-                              const Text(
-                                'Сэтгэлийн бэлэг илгээгээрэй',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 13),
-                              ),
-                              Text(
-                                'Та өөрийн хамтран ажиллагч багийн найздаа талархсан сэтгэгдлээ илэрхийлэх бол энэхүү хайрцагийг ашиглаад илгээгээрэй',
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.grey[600]),
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.justify,
-                                maxLines: 10,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width / 3,
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: Image.asset('assets/new-idea.png'),
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Хэнд зориулсан',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                  InkWell(
-                    onTap: () {
-                      composeController.getDepartment(2684, '1');
-                      departmentModalBottomSheet(context);
-                      // bottomSheet(context);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      // right: 10,
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: Column(
                         children: [
-                          const SizedBox(),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Obx(
-                              () => composeController.isDepSelected.value
-                                  ? Text(
-                                      composeController
-                                          .bottomSheetDepTitle.value,
-                                      style: const TextStyle(
-                                        color: Colors.blue,
-                                        // fontSize: 15,
-                                      ),
-                                    )
-                                  : Text(
-                                      composeController
-                                          .bottomSheetDepTitle.value,
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        // fontSize: 15,
-                                      ),
-                                    ),
-                            ),
+                          const Text(
+                            'Сэтгэлийн бэлэг илгээгээрэй',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 13),
                           ),
-                          Row(
-                            children: const [
-                              Icon(Icons.keyboard_arrow_down_sharp),
-                              SizedBox(width: 10),
-                            ],
+                          Text(
+                            'Та өөрийн хамтран ажиллагч багийн найздаа талархсан сэтгэгдлээ илэрхийлэх бол энэхүү хайрцагийг ашиглаад илгээгээрэй',
+                            style: TextStyle(
+                                fontSize: 13, color: Colors.grey[600]),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.justify,
+                            maxLines: 10,
                           ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  _buildSelectedWorkers(),
-                  // depa
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Хэнд зориулсан',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              InkWell(
+                onTap: () {
+                  composeController.getDepartment(2684, '1');
+                  departmentModalBottomSheet(context);
+                  // bottomSheet(context);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Obx(
+                          () => composeController.isDepSelected.value
+                              ? Text(
+                                  composeController.bottomSheetDepTitle.value,
+                                  style: const TextStyle(
+                                    color: Colors.blue,
+                                    // fontSize: 15,
+                                  ),
+                                )
+                              : Text(
+                                  composeController.bottomSheetDepTitle.value,
+                                  style: TextStyle(
+                                    color: Colors.grey[700],
+                                    // fontSize: 15,
+                                  ),
+                                ),
+                        ),
+                      ),
+                      Row(
+                        children: const [
+                          Icon(Icons.keyboard_arrow_down_sharp),
+                          SizedBox(width: 10),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              _buildSelectedWorkers(),
+              Row(
+                children: [
                   InkWell(
                     onTap: () {
                       if (composeController.isDepSelected.value == false) {
@@ -298,185 +297,188 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Талархал',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.2,
-                            child: TextField(
-                              controller: tfController,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Талархлаа бичнэ үү',
-                                hintStyle: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: 13.5,
-                                ),
-                              ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Талархал',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        child: TextField(
+                          controller: tfController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Талархлаа бичнэ үү',
+                            hintStyle: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 13.5,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Загвар',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemCount: 6,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index1) {
-                        return Obx(
-                          () => thanksBoxController.isLoadingTemplate.value
-                              ? GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: 6,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3),
-                                  itemBuilder: (context, index2) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Shimmer.fromColors(
-                                        baseColor: Colors.grey,
-                                        highlightColor: Colors.white,
-                                        child: Container(
-                                          width: 75,
-                                          height: 75,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                )
-                              : GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: 6,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3),
-                                  itemBuilder: (context, index2) {
-                                    return InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          index1 != 0
-                                              ? selectedTempIndex =
-                                                  index1 * 6 + index2
-                                              : selectedTempIndex = index2 + 1;
-                                          isTempSelected = true;
-                                        });
-                                        defineTempIndex();
-                                      },
-                                      child: buildBlocks(index1, index2),
-                                    );
-                                  },
-                                ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      Expanded(
-                        child: SmoothPageIndicator(
-                          controller: pageController,
-                          count: 6,
-                          effect: const WormEffect(
-                            spacing: 10.0,
-                            radius: 10.0,
-                            dotWidth: 10.0,
-                            dotHeight: 10.0,
-                            paintStyle: PaintingStyle.stroke,
-                            strokeWidth: 1.5,
-                            dotColor: Colors.grey,
-                            activeDotColor: Colors.indigo,
-                          ),
-                        ),
                       ),
-                      const Spacer(),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Загвар',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                // fit: FlexFit.tight,
+                // height: 300,
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: PageView.builder(
+                  controller: pageController,
+                  itemCount: 6,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index1) {
+                    return Obx(
+                      () => thanksBoxController.isLoadingTemplate.value
+                          ? GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: 6,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                              itemBuilder: (context, index2) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.grey,
+                                    highlightColor: Colors.white,
+                                    child: Container(
+                                      width: 75,
+                                      height: 75,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: 6,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                              itemBuilder: (context, index2) {
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      index1 != 0
+                                          ? selectedTempIndex =
+                                              index1 * 6 + index2
+                                          : selectedTempIndex = index2 + 1;
+                                      isTempSelected = true;
+                                    });
+                                    defineTempIndex();
+                                  },
+                                  child: buildBlocks(index1, index2),
+                                );
+                              },
+                            ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  const Spacer(),
+                  Expanded(
+                    child: SmoothPageIndicator(
+                      controller: pageController,
+                      count: 6,
+                      effect: const WormEffect(
+                        spacing: 10.0,
+                        radius: 10.0,
+                        dotWidth: 10.0,
+                        dotHeight: 10.0,
+                        paintStyle: PaintingStyle.stroke,
+                        strokeWidth: 1.5,
+                        dotColor: Colors.grey,
+                        activeDotColor: Colors.indigo,
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 50.0),
-                    child: InkWell(
-                      onTap: () {
-                        if (tfController.text.isNotEmpty &&
-                            defineTempIndex() >= 1 &&
-                            composeController.selectedWorkers
-                                .map((workers) => workers.id)
-                                .toList()
-                                .isNotEmpty) {
-                          thanksBoxController.putThankBox(
-                            2684,
-                            "1",
-                            int.parse(composeController
-                                .departmentModel[departmentIndex].id!),
-                            composeController.selectedWorkers
-                                .map((workers) => workers.id)
-                                .toList()
-                                .join(','),
-                            tfController.text,
-                            defineTempIndex(),
-                          );
-                          composeController.selectedWorkers.clear();
-                          tfController.clear();
-                          Get.snackbar("Success", 'Your message has added');
-                        } else {
-                          Get.snackbar(
-                              'Not valid', 'Please fill all the fields');
-                        }
-                        if (composeController.selectedWorkers
-                            .map((workers) => int.parse(workers.id))
-                            .contains(2684)) {
-                          thanksBoxController.getSentList(2684, '1', 2);
-                          thanksBoxController.getReceived(2684, '1', 1);
-                        } else {
-                          thanksBoxController.getSentList(2684, '1', 2);
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurple[900],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Obx(
-                                  () => composeController
-                                          .isLoadingForTbSending.value
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 50.0),
+                child: InkWell(
+                  onTap: () {
+                    if (tfController.text.isNotEmpty &&
+                        defineTempIndex() >= 1 &&
+                        composeController.selectedWorkers
+                            .map((workers) => workers.id)
+                            .toList()
+                            .isNotEmpty) {
+                      thanksBoxController.putThankBox(
+                        2684,
+                        "1",
+                        int.parse(composeController
+                            .departmentModel[departmentIndex].id!),
+                        composeController.selectedWorkers
+                            .map((workers) => workers.id)
+                            .toList()
+                            .join(','),
+                        tfController.text,
+                        defineTempIndex(),
+                      );
+                      composeController.selectedWorkers.clear();
+                      tfController.clear();
+                      Get.snackbar("Success", 'Your message has added');
+                    } else {
+                      Get.snackbar('Not valid', 'Please fill all the fields');
+                    }
+                    if (composeController.selectedWorkers
+                        .map((workers) => int.parse(workers.id))
+                        .contains(2684)) {
+                      thanksBoxController.getSentList(2684, '1', 2);
+                      thanksBoxController.getReceived(2684, '1', 1);
+                    } else {
+                      thanksBoxController.getSentList(2684, '1', 2);
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurple[900],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Obx(
+                              () =>
+                                  composeController.isLoadingForTbSending.value
                                       ? const Center(
                                           child: CircularProgressIndicator(),
                                         )
@@ -487,18 +489,16 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                  // Get.snackbar(title, message)
-                                ),
-                              ),
-                            ],
+                              // Get.snackbar(title, message)
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -586,7 +586,7 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                                   ),
                                 ],
                               ),
-                              const Divider(),
+                              const Divider(thickness: 1, color: Colors.black),
                               Expanded(
                                 child: ListView.builder(
                                   itemCount:
@@ -679,7 +679,7 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                           ),
                         ],
                       ),
-                      const Divider(),
+                      const Divider(thickness: 1, color: Colors.black),
                       Obx(
                         () => composeController.isLoadingForGetDepartment.value
                             ? const Center(child: CircularProgressIndicator())

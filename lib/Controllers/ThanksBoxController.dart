@@ -16,6 +16,7 @@ class ThanksBoxController extends GetxController {
 
   var message = ''.obs;
   var success = ''.obs;
+  // var dep = department
 
   var mySentListModel = SentTbModel().obs;
   var receivedListModel = ReceivedTbModel().obs;
@@ -44,7 +45,7 @@ class ThanksBoxController extends GetxController {
     isLoadingSentList.value = false;
   }
 
-  void putThankBox(int userId, String token, int departmentId,
+  Future<void> putThankBox(int userId, String token, int departmentId,
       String employeeId, String description, int templateId) async {
     isLoadingPut.value = true;
 

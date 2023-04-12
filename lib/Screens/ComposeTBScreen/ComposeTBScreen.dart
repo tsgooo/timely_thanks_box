@@ -28,7 +28,9 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
   @override
   void initState() {
     super.initState();
+    composeController.getDepartment(2684, "1");
     thanksBoxController.getTemplate(2684, "1");
+    // findIndex();
   }
 
   final thanksBoxController = Get.put(ThanksBoxController());
@@ -44,6 +46,17 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
   int selectedTempIndex = 1;
 
   double chipHeight = 0;
+
+  // var a = [7165, 7194];
+
+  // late var b =
+  //     composeController.departmentModel.map((element) => element.id).toList();
+
+  // void findIndex() {
+  //   for (int i = 0; i < a.length; i++) {
+  //     print("index ${b.indexOf(a[i].toString())}");
+  //   }
+  // }
 
   Widget _buildSelectedWorkers() {
     return IntrinsicHeight(
@@ -389,10 +402,11 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                                     setState(() {
                                       index1 != 0
                                           ? selectedTempIndex =
-                                              index1 * 6 + index2
+                                              index1 * 6 + index2 + 1
                                           : selectedTempIndex = index2 + 1;
                                       isTempSelected = true;
                                     });
+                                    print("template index: $selectedTempIndex");
                                     defineTempIndex();
                                   },
                                   child: buildBlocks(index1, index2),
@@ -431,13 +445,15 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                 padding: const EdgeInsets.only(bottom: 50.0),
                 child: InkWell(
                   onTap: () {
+                    // findIndex();
                     if (tfController.text.isNotEmpty &&
                         defineTempIndex() >= 1 &&
                         composeController.selectedWorkers
                             .map((workers) => workers.id)
                             .toList()
                             .isNotEmpty) {
-                      thanksBoxController.putThankBox(
+                      thanksBoxController
+                          .putThankBox(
                         2684,
                         "1",
                         int.parse(composeController
@@ -448,21 +464,25 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
                             .join(','),
                         tfController.text,
                         defineTempIndex(),
-                      );
+                      )
+                          .then((value) {
+                        thanksBoxController.getSentList(2684, '1', 2);
+                        thanksBoxController.getReceived(2684, '1', 1);
+                      });
                       composeController.selectedWorkers.clear();
                       tfController.clear();
                       Get.snackbar("Success", 'Your message has added');
                     } else {
                       Get.snackbar('Not valid', 'Please fill all the fields');
                     }
-                    if (composeController.selectedWorkers
-                        .map((workers) => int.parse(workers.id))
-                        .contains(2684)) {
-                      thanksBoxController.getSentList(2684, '1', 2);
-                      thanksBoxController.getReceived(2684, '1', 1);
-                    } else {
-                      thanksBoxController.getSentList(2684, '1', 2);
-                    }
+                    // if (composeController.selectedWorkers
+                    //     .map((workers) => int.parse(workers.id))
+                    //     .contains(2684)) {
+                    //   thanksBoxController.getSentList(2684, '1', 2);
+                    //   thanksBoxController.getReceived(2684, '1', 1);
+                    // } else {
+                    //   thanksBoxController.getSentList(2684, '1', 2);
+                    // }
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -516,7 +536,7 @@ class _ComposeTBScreenState extends State<ComposeTBScreen>
             color: !isTempSelected
                 ? Colors.white
                 : index1 != 0
-                    ? selectedTempIndex == index1 * 6 + index2
+                    ? selectedTempIndex == index1 * 6 + index2 + 1
                         ? Colors.purple
                         : Colors.white
                     : selectedTempIndex == index2 + 1
